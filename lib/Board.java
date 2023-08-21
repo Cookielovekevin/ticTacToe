@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Board {
     private String[] board = new String[9]; 
     private String turn; 
@@ -10,16 +13,14 @@ public class Board {
         }
         turn = "X";
     }
+
     public String getTurn(){
         return turn;
     }
-
     public String[] getBoard(){
         return board;
     }
-    
-    public void setBoard(){
-
+    public void setBoard(){    
     }
     public void printBoard(){
         System.out.println("=================");
@@ -29,14 +30,14 @@ public class Board {
         System.out.println("=================");
     }
 
-
-   public boolean checkValid(int wantedMove){
-        if(board[wantedMove-1] == "X" || board[wantedMove-1] == "O") //if the spot on board is X or O then NOT a valid move.
+   public boolean checkValid(int wantedmove){
+        if(board[wantedmove-1] == "X" || board[wantedmove-1] == "O") //if the spot on board is X or O then NOT a valid move.
             return false;
         return true;
     }
-    public void Move(int wantedMove){
-        board[wantedMove - 1] = turn;
+
+    public void move(int wantedmove){
+        board[wantedmove - 1] = turn;
         if(turn == "X")
             turn = "O";
         else
@@ -85,10 +86,34 @@ public class Board {
         for(int a = 1; a <= 9; a++){
             if(checkValid(a)) //if valid moves are available
                 break;
-            else if(a == 8)
+            else if (a==9) //every single spot is NOT a valid move even a=9 aka btm right corner 
                 return("Draw");    
         }
         
         return null;
+   }
+
+   public void printWinner(){
+
+    if(checkWinner() == "X" || checkWinner() == "O"){
+        System.out.println("The winner is " + checkWinner());
+    }
+    else
+        System.err.println("Draw");
+   }
+
+   // bot functionality 
+   public List<Integer> possiblemoves(){
+    List<Integer> possiblemoves = new ArrayList<Integer>();
+    for(int i = 1; i < 9; i++){
+        if(checkValid(i)) // if possible move than add to list
+            possiblemoves.add(i);
+    }
+    return possiblemoves;
+   }
+
+   public int randomMove(){
+    int random = (int) Math.floor()Math.random() * possiblemoves().size(); //return a random index withing range of possible moves
+    return possiblemoves().get(random);
    }
 }
