@@ -20,7 +20,8 @@ public class Board {
     public String[] getBoard(){
         return board;
     }
-    public void setBoard(){    
+    public void setBoard(String[] board){
+        this.board = board; 
     }
     public void printBoard(){
         System.out.println("=================");
@@ -37,7 +38,7 @@ public class Board {
     }
 
     public void move(int wantedmove){
-        board[wantedmove - 1] = turn;
+        this.board[wantedmove - 1] = turn;
         if(turn == "X")
             turn = "O";
         else
@@ -110,10 +111,5 @@ public class Board {
             possiblemoves.add(i);
     }
     return possiblemoves;
-   }
-
-   public int randomMove(){
-    int random = (int) Math.floor()Math.random() * possiblemoves().size(); //return a random index withing range of possible moves
-    return possiblemoves().get(random);
    }
 }
