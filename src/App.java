@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class App extends Bot {
-    static void playGame(Board testGame){
+     static void playGame(Board testGame){
         Scanner input = new Scanner(System.in);
         while(testGame.checkWinner() == null){ //while there is no winner && board is NOT full
                     testGame.printBoard();
@@ -16,12 +16,12 @@ public class App extends Bot {
         }
         input.close();
     }
-    static void playEasyGame(Board testGame){ //bot picks random number
+     static void playEasyGame(Board testGame){ //bot picks random number
          Scanner input = new Scanner(System.in);
          testGame.printBoard();
          while(testGame.checkWinner() == null){ //while there is no winner && board is NOT full
                 if(testGame.getTurn() == "O"){ //bot move if O 
-                    testGame.move(random(testGame));
+                    testGame.move(testGame.random());
                     testGame.printBoard();
                 }  
                 else{
@@ -42,7 +42,7 @@ public class App extends Bot {
         testGame.printBoard();
             while(testGame.checkWinner() == null){ //while there is no winner 
                 if(testGame.getTurn() == "O"){ //bot move if O 
-                    testGame.move(oneAhead(testGame));
+                    testGame.move(testGame.oneAhead(testGame));
                     testGame.printBoard();
                 }  
                 else{
@@ -102,7 +102,24 @@ public class App extends Bot {
             }
 
             else if(decision.equals("Med")){
-                playMediumGame(testGame);
+                testGame.printBoard();
+                while(testGame.checkWinner() == null){ //while there is no winner 
+                    if(testGame.getTurn() == "O"){ //bot move if O 
+                        testGame.move(testGame.oneAhead(testGame));
+                        testGame.printBoard();
+                    }  
+                    else{
+                        System.out.println(testGame.getTurn() + " turn.");
+                        System.out.println("Where would you like to go?: "); //check terminal for inputs scanner open until game is done!  
+                        int move = input.nextInt();
+                        if(testGame.checkValid(move)){
+                            testGame.move(move);
+                        }
+                        else
+                            System.out.println("Invalid input");
+                    }
+                }   
+    
             }
 
             else if(decision.equals("Hard")){

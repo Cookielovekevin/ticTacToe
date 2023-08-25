@@ -2,32 +2,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
-    private String[] board = new String[9]; 
+    private String[] board; 
     private String turn; 
     
     public Board(){
+        board = new String[9];
         int num = 1;
         for(int i=0; i<9; i++){
-            board[i] = Integer.toString(num);
+            this.board[i] = Integer.toString(num);
             num++; 
         }
-        turn = "X";
+        this.turn = "X";
+    }
+    public Board(Board copyBoard){
+        this.board = copyBoard.board;
+        this.turn = copyBoard.turn;
     }
 
     public String getTurn(){
-        return turn;
+        return this.turn;
+    }
+    public void setTurn(String turn){
+        if(turn.equals("X") || turn.equals("O")){
+            this.turn = turn;
+        }
     }
     public String[] getBoard(){
-        return board;
+        return this.board;
     }
     public void setBoard(String[] board){
         this.board = board; 
     }
     public void printBoard(){
         System.out.println("=================");
-        System.out.println("|| " + board[0] + " || " + board[1] + " || " + board[2] + " ||");
-        System.out.println("|| " + board[3] + " || " + board[4] + " || " + board[5] + " ||");
-        System.out.println("|| " + board[6] + " || " + board[7] + " || " + board[8] + " ||");
+        System.out.println("|| " + this.board[0] + " || " + this.board[1] + " || " + this.board[2] + " ||");
+        System.out.println("|| " + this.board[3] + " || " + this.board[4] + " || " + this.board[5] + " ||");
+        System.out.println("|| " + this.board[6] + " || " + this.board[7] + " || " + this.board[8] + " ||");
         System.out.println("=================");
     }
 
@@ -38,11 +48,11 @@ public class Board {
     }
 
     public void move(int wantedmove){
-        this.board[wantedmove - 1] = turn;
+        this.board[wantedmove - 1] = this.turn;
         if(turn == "X")
-            turn = "O";
+            this.turn = "O";
         else
-            turn = "X";
+            this.turn = "X";
     }
 
    public String checkWinner(){
@@ -51,32 +61,32 @@ public class Board {
             switch(a){
                 //horizontal wins
                 case 0:
-                line = board[0] + board[1] + board[2];
+                line = this.board[0] + this.board[1] + this.board[2];
                 break;
                 case 1: 
-                line = board[3] + board[4] + board[5];
+                line = this.board[3] + this.board[4] + this.board[5];
                 break;
                 case 2:
-                line = board[6] + board[7] + board[8];
+                line = this.board[6] + this.board[7] + this.board[8];
                 break;
                 
                 // vertical wins
                 case 3: 
-                line = board[0] + board[3] + board[6];
+                line = this.board[0] + this.board[3] + this.board[6];
                 break;
                 case 4:
-                line = board[1] + board[4] + board[7];
+                line = this.board[1] + this.board[4] + this.board[7];
                 break;
                 case 5: 
-                line = board[2] + board[5] + board[8];
+                line = this.board[2] + this.board[5] + this.board[8];
                 break;
 
                 // diagonal wins
                 case 6: 
-                line = board[0] + board[4] + board[8];
+                line = this.board[0] + this.board[4] + this.board[8];
                 break;
                 case 7: 
-                line = board[2] + board[4] + board[6];
+                line = this.board[2] + this.board[4] + this.board[6];
                 break;
             }
             if(line.equals("XXX"))
@@ -112,4 +122,22 @@ public class Board {
     }
     return possiblemoves;
    }
+
+   public int random(){
+    int random = (int) Math.floor(Math.random() * this.possiblemoves().size()); //return a random index withing range of possible moves
+    return this.possiblemoves().get(random);
+    }
+
+    public int oneAhead(Board copee){
+        Board copyBoard = new Board(copee);
+        copee.printBoard();
+        copyBoard.printBoard();
+
+        copee.move(3);
+        copyBoard.move(2);
+
+        copee.printBoard();
+        copyBoard.printBoard();
+        return 2;
+    }
 }
